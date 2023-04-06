@@ -1,11 +1,15 @@
 function add_events_to_calendar() {
 
-  // Below line Contains a id `1DBhd15LlRmKhj2AQUQFZz1impcqgF41RCatwLg3Kfj4` which is a Google SpreadSheet ID
-  // You can check the same here https://docs.google.com/spreadsheets/d/1DBhd15LlRmKhj2AQUQFZz1impcqgF41RCatwLg3Kfj4/edit?usp=sharing
-  var spreadsheet = SpreadsheetApp.openById("1DBhd15LlRmKhj2AQUQFZz1impcqgF41RCatwLg3Kfj4")
+  // Put your Calendar and Sheet ID
+  var cal_id = 'd3d462c59d9c7104fe5040f9fdd28675a8a94006bc9a5fab067dc8fc854a8dc6@group.calendar.google.com'
+  var spreadsheet_id = '1DBhd15LlRmKhj2AQUQFZz1impcqgF41RCatwLg3Kfj4'
+  var sheet_name = 'event_sheet_01'
 
-  // Below line is the Sheet name from the above SpreadSheet Check the readme file for the same.
-  var data_sheet = spreadsheet.getSheetByName("event_sheet_01")
+  // You can check the same here https://docs.google.com/spreadsheets/d/1DBhd15LlRmKhj2AQUQFZz1impcqgF41RCatwLg3Kfj4/edit?usp=sharing
+  var spreadsheet = SpreadsheetApp.openById(spreadsheet_id)
+
+  // Below line is the Sheet name from the above SpreadSheet
+  var data_sheet = spreadsheet.getSheetByName(sheet_name)
   var total_events = data_sheet.getDataRange().getValues().length
 
   // Any prefix you want to add before the events
@@ -23,9 +27,8 @@ function add_events_to_calendar() {
   // Enter the Colum name in which you have event dates in google sheet
   var event_date_colum = 'B'
 
-  // Below line has the calendar ID in which you want to add the events make sure you have access to the same.
-  // You can check the calender from here https://calendar.google.com/calendar/u/1?cid=ZTJmNTg4OTRjNmNiMzIzMzFhYmZkNmMyNmUxM2ZmN2EyNjhlMzMxMGI4MjljNGQ2NTVlNmYyYzNjODE5ZDczMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t
-  var calendar = CalendarApp.getCalendarById("e2f58894c6cb32331abfd6c26e13ff7a268e3310b829c4d655e6f2c3c819d730@group.calendar.google.com")
+  // You can check the calender from here https://calendar.google.com/calendar/embed?src=d3d462c59d9c7104fe5040f9fdd28675a8a94006bc9a5fab067dc8fc854a8dc6%40group.calendar.google.com&ctz=Asia%2FKolkata
+  var calendar = CalendarApp.getCalendarById(cal_id)
 
   // Loop via all the events in the sheet
   for ( var event = 1; event <= total_events; event++ ){
@@ -42,7 +45,8 @@ function add_events_to_calendar() {
     // Add the event in the Calendar
     calendar.createAllDayEvent( event_prefix + event_name + event_suffix,
       new Date(start_date),
-      { description: event_description })
+      { description: event_description }
+      )
   }
 
 }
